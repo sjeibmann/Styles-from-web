@@ -25,10 +25,23 @@ const ProjectView = ({ project, onBack, onDelete }) => {
     const Tag = style.tag;
     
     return (
-      <Paper key={index} sx={{ p: 3 }}>
-        {/* Display the actual styled text */}
-        <Tag 
-          style={{
+      <Box key={index} sx={{ 
+        width: '100%', 
+        mb: 3,
+        pb: 3,
+        borderBottom: index < (project.typeStyles?.length - 1) ? '1px solid #e0e0e0' : 'none'
+      }}>
+        {/* Display the actual styled text like MUI demo */}
+        <Typography 
+          variant={style.tag === 'h1' ? 'h1' : 
+                   style.tag === 'h2' ? 'h2' : 
+                   style.tag === 'h3' ? 'h3' : 
+                   style.tag === 'h4' ? 'h4' : 
+                   style.tag === 'h5' ? 'h5' : 
+                   style.tag === 'h6' ? 'h6' : 
+                   style.tag === 'p' ? 'body1' : 'body1'}
+          gutterBottom
+          sx={{
             fontSize: style.fontSize,
             fontFamily: style.fontFamily,
             fontWeight: style.fontWeight,
@@ -40,77 +53,74 @@ const ProjectView = ({ project, onBack, onDelete }) => {
             textDecoration: style.textDecoration
           }}
         >
-          {style.actualText || style.text}
-        </Tag>
+          {style.tag}. {style.actualText || style.text || 'Sample text'}
+        </Typography>
         
-        {/* Show style details in a more readable format */}
-        <Box sx={{ mt: 3, display: 'flex', flexWrap: 'wrap', gap: 1 }}>
-          <Chip
-            label={`${style.tag.toUpperCase()}`}
-            size="small"
-            color="primary"
-            variant="filled"
-          />
-          <Chip
-            label={`Size: ${style.fontSize}`}
-            size="small"
-            variant="outlined"
-            sx={{ fontFamily: 'monospace' }}
-          />
-          <Chip
-            label={`Weight: ${style.fontWeight}`}
-            size="small"
-            variant="outlined"
-            sx={{ fontFamily: 'monospace' }}
-          />
-          <Chip
-            label={`Color: ${style.color}`}
-            size="small"
-            variant="outlined"
-            sx={{ fontFamily: 'monospace' }}
-          />
-          {style.textTransform !== 'none' && (
-            <Chip
-              label={`Transform: ${style.textTransform}`}
-              size="small"
-              variant="outlined"
-              sx={{ fontFamily: 'monospace' }}
-            />
-          )}
-          {style.letterSpacing !== 'normal' && (
-            <Chip
-              label={`Spacing: ${style.letterSpacing}`}
-              size="small"
-              variant="outlined"
-              sx={{ fontFamily: 'monospace' }}
-            />
-          )}
-          {style.textDecoration !== 'none' && (
-            <Chip
-              label={`Decoration: ${style.textDecoration}`}
-              size="small"
-              variant="outlined"
-              sx={{ fontFamily: 'monospace' }}
-            />
-          )}
-        </Box>
-        
-        {/* Show font family separately */}
-        <Box sx={{ mt: 2 }}>
-          <Typography variant="caption" sx={{ fontFamily: 'monospace', color: 'text.secondary' }}>
-            Font: {style.fontFamily}
+        {/* Style details below the text like MUI's approach */}
+        <Box sx={{ mt: 2, display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
+          <Typography variant="caption" sx={{ 
+            fontFamily: 'monospace', 
+            color: 'text.secondary',
+            backgroundColor: 'grey.100',
+            px: 1,
+            py: 0.5,
+            borderRadius: 1,
+            fontSize: '11px'
+          }}>
+            {style.tag.toUpperCase()}
           </Typography>
-        </Box>
-        
-        {/* Show actual text if different from sample */}
-        {style.actualText && style.actualText !== style.text && (
-          <Box sx={{ mt: 2 }}>
-            <Typography variant="caption" color="text.secondary">
-              Original: "{style.actualText.slice(0, 50)}{style.actualText.length > 50 ? '...' : ''}"
+          <Typography variant="caption" sx={{ 
+            fontFamily: 'monospace', 
+            color: 'text.secondary',
+            backgroundColor: 'grey.100',
+            px: 1,
+            py: 0.5,
+            borderRadius: 1,
+            fontSize: '11px'
+          }}>
+            {style.fontSize}
+          </Typography>
+          <Typography variant="caption" sx={{ 
+            fontFamily: 'monospace', 
+            color: 'text.secondary',
+            backgroundColor: 'grey.100',
+            px: 1,
+            py: 0.5,
+            borderRadius: 1,
+            fontSize: '11px'
+          }}>
+            {style.fontWeight}
+          </Typography>
+          <Typography variant="caption" sx={{ 
+            fontFamily: 'monospace', 
+            color: 'text.secondary',
+            backgroundColor: 'grey.100',
+            px: 1,
+            py: 0.5,
+            borderRadius: 1,
+            fontSize: '11px'
+          }}>
+            {style.color}
+          </Typography>
+          {style.fontFamily && (
+            <Typography variant="caption" sx={{ 
+              fontFamily: 'monospace', 
+              color: 'text.secondary',
+              backgroundColor: 'grey.100',
+              px: 1,
+              py: 0.5,
+              borderRadius: 1,
+              fontSize: '11px',
+              maxWidth: '200px',
+              overflow: 'hidden',
+              textOverflow: 'ellipsis',
+              whiteSpace: 'nowrap'
+            }}>
+              {style.fontFamily}
             </Typography>
-          </Box>
-        )}
-      </Paper>
+          )}
+        </Box>
+      </Box>
     );
   };
 
@@ -188,11 +198,7 @@ const ProjectView = ({ project, onBack, onDelete }) => {
   );
 
   return (
-    <Box sx={{ 
-      minHeight: '100vh', 
-      background: 'linear-gradient(135deg, #f5f5f5 0%, #e3f2fd 100%)'
-    }}>
-      <Container maxWidth="lg" sx={{ py: 4 }}>
+    <Container maxWidth="lg" sx={{ py: 4 }}>
         <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 4 }}>
           <Button
             startIcon={<ArrowBackIcon />}
@@ -227,7 +233,7 @@ const ProjectView = ({ project, onBack, onDelete }) => {
               width: 48,
               height: 48,
               borderRadius: 2,
-              background: 'linear-gradient(45deg, #1976d2 30%, #9c27b0 90%)',
+              background: 'linear-gradient(45deg, #FFB300 30%, #FF6B35 90%)',
               mr: 2,
               overflow: 'hidden',
               border: '2px solid white',
@@ -312,30 +318,32 @@ const ProjectView = ({ project, onBack, onDelete }) => {
         </Paper>
 
         {/* Typography Styles */}
-        <Paper elevation={2} sx={{ p: 4, mb: 4 }}>
-          <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mb: 3 }}>
-            <Box sx={{ display: 'flex', alignItems: 'center' }}>
-              <TextFieldsIcon sx={{ mr: 2, color: 'primary.main' }} />
-              <Typography variant="h5">Typography</Typography>
+        {project.typeStyles && project.typeStyles.length > 0 && (
+          <Paper elevation={2} sx={{ p: 4, mb: 4 }}>
+            <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mb: 3 }}>
+              <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                <TextFieldsIcon sx={{ mr: 2, color: 'primary.main' }} />
+                <Typography variant="h5">Typography</Typography>
+              </Box>
+              <Chip
+                label={`${project.typeStyles?.length || 0} styles extracted`}
+                size="small"
+                color="primary"
+                variant="outlined"
+              />
             </Box>
-            <Chip
-              label={`${project.typeStyles?.length || 0} styles extracted`}
-              size="small"
-              color="primary"
-              variant="outlined"
-            />
-          </Box>
-          <Typography variant="body2" color="text.secondary" sx={{ mb: 3 }}>
-            Actual heading styles extracted from h1-h6 and paragraph tags in order of hierarchy
-          </Typography>
-          <Grid container spacing={3}>
-            {project.typeStyles?.map((style, index) => (
-              <Grid item xs={12} md={6} key={index}>
-                {renderTypeStyle(style, index)}
-              </Grid>
-            ))}
-          </Grid>
-        </Paper>
+            <Typography variant="body2" color="text.secondary" sx={{ mb: 3 }}>
+              Typography styles extracted from the website, displayed in hierarchical order
+            </Typography>
+            
+            {/* Single column layout like MUI demo */}
+            <Box sx={{ width: '100%', maxWidth: 800 }}>
+              {project.typeStyles?.map((style, index) => (
+                renderTypeStyle(style, index)
+              ))}
+            </Box>
+          </Paper>
+        )}
 
         {/* Color Palette */}
         <Paper elevation={2} sx={{ p: 4, mb: 4 }}>
@@ -386,7 +394,6 @@ const ProjectView = ({ project, onBack, onDelete }) => {
           </Paper>
         )}
       </Container>
-    </Box>
   );
 };
 

@@ -41,7 +41,7 @@ const NewProjectForm = ({ onSubmit, onCancel, isLoading }) => {
           width: 48,
           height: 48,
           borderRadius: 2,
-          background: 'linear-gradient(45deg, #1976d2 30%, #9c27b0 90%)',
+          background: 'linear-gradient(45deg, #FFB300 30%, #FF6B35 90%)',
           mb: 2
         }}>
           <LanguageIcon sx={{ fontSize: 24, color: 'white' }} />
